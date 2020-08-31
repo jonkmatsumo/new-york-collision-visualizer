@@ -3,7 +3,6 @@ import pandas as pd
 import numpy as np
 import pydeck as pdk
 import plotly.express as px
-from scipy.stats import zscore
 
 DATA_URL = "Motor_Vehicle_Collisions_-_Crashes.csv"
 
