@@ -1,4 +1,4 @@
-# new-york-collision-visualizer #
+# New York Collision Visualizer #
 
 #### To view the live demo deployed on Heroku, click [here](https://nyc-visualizer.herokuapp.com/). ####
 
