@@ -7,8 +7,10 @@ import plotly.express as px
 DATA_URL = "Motor_Vehicle_Collisions_-_Crashes.csv"
 
 st.title("Motor Vehicle Collisions in New York City")
-st.markdown("This application is a Streamlit dashboard that can be used"
-"to analyze motor vehicle collisions in NYC 🗽💥🚗")
+st.markdown("This application is a Streamlit dashboard that can be used to analyze motor vehicle collisions in "
+            "New York City 🗽💥🚗.")
+st.markdown("Data courtesy of the "
+            "[City of New York](https://data.cityofnewyork.us/Public-Safety/Motor-Vehicle-Collisions-Crashes/h9gi-nx95)")
 
 
 @st.cache(persist=True)
@@ -22,7 +24,10 @@ def load_data(nrows):
     return data
 
 
-data = load_data(100000)
+nrows = st.selectbox('How many entries would you like to load? (Note: Loading more entries requires more time)',
+             ('5000', '10000', '25000', '50000', '100000', '200000', '400000'))
+
+data = load_data(int(nrows))
 original_data = data
 
 st.header("Where are the most people injured in NYC?")
