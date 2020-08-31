@@ -5,13 +5,12 @@ import pydeck as pdk
 import plotly.express as px
 from scipy.stats import zscore
 
-DATA_URL = (
-"Motor_Vehicle_Collisions_-_Crashes.csv"
-)
+DATA_URL = "Motor_Vehicle_Collisions_-_Crashes.csv"
 
 st.title("Motor Vehicle Collisions in New York City")
 st.markdown("This application is a Streamlit dashboard that can be used"
 "to analyze motor vehicle collisions in NYC 🗽💥🚗")
+
 
 @st.cache(persist=True)
 def load_data(nrows):
@@ -22,6 +21,7 @@ def load_data(nrows):
     data.rename(columns={'crash_date_crash_time': 'date/time'}, inplace=True)
 
     return data
+
 
 data = load_data(100000)
 original_data = data
@@ -37,7 +37,6 @@ hour = st.slider("Hour to look at", 0, 23)
 data = data[data['date/time'].dt.hour == hour]
 
 st.markdown("Vehicle collisions between %i:00 and %i:00" % (hour, (hour + 1) % 24))
-
 
 st.write(pdk.Deck(
     map_style = "mapbox://styles/mapbox/light-v9",
@@ -79,7 +78,6 @@ elif select == 'Cyclists':
     st.write(original_data.query("injured_cyclists >= 1")[["on_street_name", "injured_cyclists"]].sort_values(by=["injured_cyclists"], ascending=False).dropna(how="any")[:5])
 else:
     st.write(original_data.query("injured_motorists >= 1")[["on_street_name", "injured_motorists"]].sort_values(by=["injured_motorists"], ascending=False).dropna(how="any")[:5])
-
 
 if st.checkbox("Show Raw Data", False):
     st.subheader('Raw Data')
