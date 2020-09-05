@@ -23,24 +23,26 @@ def load_data(nrows):
 
     return data
 
-
-nrows = st.selectbox('How many entries would you like to load? (Note: Loading more entries requires more time)',
+st.sidebar.header("How many entries would you like to load?")
+nrows = st.sidebar.selectbox('Note: Loading more entries requires more time',
              ('5000', '10000', '25000', '50000', '100000', '200000', '400000'))
 
 data = load_data(int(nrows))
 original_data = data
 
-st.header("Where are the most people injured in NYC?")
-injured_people = st.slider("Number of persons injured in vehicle collisions", 0, 19, 4)
+st.subheader("Where are the most people injured in NYC?")
+
+st.sidebar.header("Map 1: Number of persons injured in vehicle collision?")
+injured_people = st.sidebar.slider("Map 1 displays accidents with the selected amount of people injured.", 0, 19, 4)
 
 midpoint = (np.average(data['latitude']), np.average(data['longitude']))
 st.map(data.query("injured_persons >= @injured_people")[["latitude", "longitude"]].dropna(how="any"))
 
-st.header("How many collisions occur during a given time of day?")
-hour = st.slider("Hour to look at", 0, 23)
+st.sidebar.header("Map 2: How many collisions occur during a given time of day?")
+hour = st.sidebar.slider("Map 2 displays accidents that occured at the hour selected.", 0, 23)
 data = data[data['date/time'].dt.hour == hour]
 
-st.markdown("Vehicle collisions between %i:00 and %i:00" % (hour, (hour + 1) % 24))
+st.subheader("Number of collisions that occured between %i:00 and %i:00:" % (hour, (hour + 1) % 24))
 
 st.write(pdk.Deck(
     map_style = "mapbox://styles/mapbox/light-v9",
@@ -83,6 +85,7 @@ elif select == 'Cyclists':
 else:
     st.write(original_data.query("injured_motorists >= 1")[["on_street_name", "injured_motorists"]].sort_values(by=["injured_motorists"], ascending=False).dropna(how="any")[:5])
 
-if st.checkbox("Show Raw Data", False):
+st.sidebar.text("\n")
+if st.sidebar.checkbox("Show Raw Data", False):
     st.subheader('Raw Data')
     st.write(data)
