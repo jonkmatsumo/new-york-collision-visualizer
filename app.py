@@ -75,6 +75,9 @@ chart_data = pd.DataFrame({'minute': range(60), 'crashes': hist})
 fig = px.bar(chart_data, x='minute', y='crashes', hover_data=['minute', 'crashes'], height=400)
 st.write(fig)
 
+st.markdown("From this, we can conclude that motor vehicle collisions are significantly more likely"
+            "to occur during the nighttime. Between 0:00 and 6:00 is the peak time for collisions.")
+
 st.header("Top 5 dangerous streets by affected type")
 select = st.selectbox('Affected type of people', ['Pedestrians', 'Cyclists', 'Motorists'])
 
@@ -84,6 +87,9 @@ elif select == 'Cyclists':
     st.write(original_data.query("injured_cyclists >= 1")[["on_street_name", "injured_cyclists"]].sort_values(by=["injured_cyclists"], ascending=False).dropna(how="any")[:5])
 else:
     st.write(original_data.query("injured_motorists >= 1")[["on_street_name", "injured_motorists"]].sort_values(by=["injured_motorists"], ascending=False).dropna(how="any")[:5])
+
+st.markdown("From this, we can conclude that motor vehicle collisions involving pedestrians are"
+            "significantly more likely to result in injuries.")
 
 st.sidebar.text("\n")
 if st.sidebar.checkbox("Show Raw Data", False):
